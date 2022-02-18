@@ -5,7 +5,7 @@ This module makes it easy to provision an [OCI VCN](https://docs.oracle.com/en-u
 - Build a [VCN](https://docs.oracle.com/en-us/iaas/Content/Network/Tasks/managingVCNs.htm) and one or more subnets
 - Create an [Alkira Connector](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/connector_oci_vcn) for the new VCN
 - Apply [Billing Tags](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/data-sources/billing_tag) to the connector
-- Place resources in an existing [segment](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/data-sources/segment) and [group](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/data-sources/group)
+- Place resources in an existing [Segment](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/data-sources/segment) and [Group](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/data-sources/group)
 - Provide optional capabilities for customized routing
 
 ## Example Usage
