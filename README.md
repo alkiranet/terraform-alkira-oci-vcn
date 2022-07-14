@@ -8,30 +8,24 @@ This module makes it easy to provision an [OCI VCN](https://docs.oracle.com/en-u
 - Place resources in an existing [Segment](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/data-sources/segment) and [Group](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/data-sources/group)
 - Provide optional capabilities for customized routing
 
-## Example Usage
-Alkira offers enhanced capabilities for how traffic gets routed to and from _Cloud Exchange Points (CXPs)_.
-
-### Onboard entire VCN CIDR
-To onboard the entire VCN CIDR:
-
+### Basic Usage
 ```hcl
 module "oci_vcn" {
   source = "alkiranet/oci-vcn/alkira"
 
-  name           = "vcn-oci-west"
+  name           = "vcn-west"
   region         = "us-sanjose-1"
   cidrs          = ["10.1.0.0/16"]
   compartment_id = "oci-xxxxxxxx"
 
   subnets = [
     {
-      name    = "subnet-01"
+      name    = "app-subnet-a"
       cidr    = "10.1.1.0/24"
       private = "true"
     },
-
     {
-      name    = "subnet-02"
+      name    = "app-subnet-b"
       cidr    = "10.1.2.0/24"
       private = "true"
     }
@@ -45,83 +39,7 @@ module "oci_vcn" {
 
 }
 ```
-
-### Onboard specific subnets
-You may also wish to onboard specific subnets. To do this, simply add **onboard_subnet = true** and add an extra **flag** key with **value** _alkira_ to the subnets you wish to onboard. You can do this with additional subnets as needed:
-
-```hcl
-module "oci_vcn" {
-  source = "alkiranet/oci-vcn/alkira"
-
-  onboard_subnet = true
-
-  name           = "vcn-oci-west"
-  region         = "us-sanjose-1"
-  cidrs          = ["10.1.0.0/16"]
-  compartment_id = "oci-xxxxxxxx"
-
-  subnets = [
-    {
-      name    = "subnet-01"
-      cidr    = "10.1.1.0/24"
-      private = "true"
-    },
-
-    {
-      name    = "subnet-02"
-      cidr    = "10.1.2.0/24"
-      private = "true"
-      flag    = "alkira"
-    }
-  ]
-
-  cxp          = "US-WEST-1"
-  segment      = "corporate"
-  group        = "non-prod"
-  billing_tags = ["cloud", "network"]
-  credential   = "oci-auth"
-
-}
-```
-
-### Custom Routing
-By default, Alkira will override the existing default route and route the traffic to the _CXP_. As an alternative, you can provide a list of prefixes for which traffic must be routed. This can be done by adding the option **custom_prefixes = []** to the configuration.
-
-```hcl
-module "oci_vcn" {
-  source = "alkiranet/oci-vcn/alkira"
-
-  custom_prefixes  = ["pfx-01", "pfx-02"] # Must exist in Alkira
-
-  name           = "vcn-oci-west"
-  region         = "us-sanjose-1"
-  cidrs          = ["10.1.0.0/16"]
-  compartment_id = "oci-xxxxxxxx"
-
-  subnets = [
-    {
-      name    = "subnet-01"
-      cidr    = "10.1.1.0/24"
-      private = "true"
-    },
-
-    {
-      name    = "subnet-02"
-      cidr    = "10.1.2.0/24"
-      private = "true"
-    }
-  ]
-
-  cxp          = "US-WEST-1"
-  segment      = "corporate"
-  group        = "non-prod"
-  billing_tags = ["cloud", "network"]
-  credential   = "oci-auth"
-
-}
-```
-
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -190,4 +108,4 @@ No modules.
 | <a name="output_vcn_cidr"></a> [vcn\_cidr](#output\_vcn\_cidr) | OCI VCN cidr |
 | <a name="output_vcn_id"></a> [vcn\_id](#output\_vcn\_id) | OCI VCN ID |
 | <a name="output_vpc_subnet"></a> [vpc\_subnet](#output\_vpc\_subnet) | Alkira subnet onboarded to CXP |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
